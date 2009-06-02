@@ -1,32 +1,41 @@
-= nfc
+= NFC
 
-* FIX (url)
+* http://seattlerb.rubyforge.org
 
 == DESCRIPTION:
 
-FIX (describe your package)
+NFC is a ruby wrapper for the Near Field Communication library.  The Near
+Field Communication library works with many USB RFID readers, so this gem
+lets you read RFID tags.
 
 == FEATURES/PROBLEMS:
 
-* FIX (list of features or problems)
+* Only supports ISO1443A tags (MIFARE) tags right now.
 
 == SYNOPSIS:
 
-  FIX (code sample of usage)
+  require 'nfc'
+
+  # Read your tag and print the info
+  p NFC.instance.find
 
 == REQUIREMENTS:
 
-* FIX (list of requirements)
+* A USB RFID reader.  I'm using the touchatag[http://touchatag.com].
+* ffi
+* libnfc
 
 == INSTALL:
 
-* FIX (sudo gem install, anything else)
+* First install libnfc[http://libnfc.org/]
+* Make sure libnfc.dylib or libnfc.so is in your library path
+* gem install nfc
 
 == LICENSE:
 
 (The MIT License)
 
-Copyright (c) 2009 FIX
+Copyright (c) 2009 Aaron Patterson
 
 Permission is hereby granted, free of charge, to any person obtaining
 a copy of this software and associated documentation files (the

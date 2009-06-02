@@ -1,3 +1,9 @@
 #!/usr/bin/env ruby
 
-abort "you need to write me"
+require 'rubygems'
+require 'nfc'
+nfc = NFC.instance
+
+puts "Connected to NFC reader: #{nfc.device.name}"
+puts
+p nfc.find

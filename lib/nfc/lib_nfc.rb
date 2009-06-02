@@ -1,7 +1,7 @@
 require 'ffi'
 
 class NFC
-  class LibNFC # :nodoc
+  class LibNFC
     extend FFI::Library
     ffi_lib 'nfc'
 
@@ -40,8 +40,12 @@ class NFC
         :abtAts, [:char, 36]
       )
 
+      def uid
+        self[:abtUid].to_a.slice(0, self[:uiUidLen])
+      end
+
       def inspect
-        uid = sprintf((['%02x'] * self[:uiUidLen]).join('  '), *(self[:abtUid]))
+        uid = sprintf((['%02x'] * self[:uiUidLen]).join('  '), *self.uid)
 
         string_ary =
           [ "(NFC) ISO14443A Tag",
