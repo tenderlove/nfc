@@ -27,4 +27,13 @@ class TestNFC < Test::Unit::TestCase
     @nfc.parity = true
     @nfc.parity = false
   end
+
+  def test_infinite_list_passive=
+    @nfc.infinite_list_passive = true
+    @nfc.infinite_list_passive = false
+  end
+
+  def test_poll_mifare
+    thing = @nfc.poll_mifare
+  end
 end

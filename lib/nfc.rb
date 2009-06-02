@@ -28,4 +28,33 @@ class NFC
   def parity= v
     LibNFC.nfc_configure @device.pointer, LibNFC::DCO_HANDLE_PARITY, v ? 1 : 0
   end
+
+  def infinite_list_passive= v
+    LibNFC.nfc_configure(
+      @device.pointer,
+      LibNFC::DCO_INFINITE_LIST_PASSIVE,
+      v ? 1 : 0
+    )
+  end
+
+  def poll_mifare
+    thing = LibNFC::ISO1443A.new
+    LibNFC.nfc_reader_list_passive(
+      @device.pointer,
+      LibNFC::IM_ISO14443A_106,
+      nil,
+      0,
+      thing
+    )
+    thing
+  end
+
+  def find
+    deactivate_field
+    self.infinite_list_passive = false
+    self.crc = true
+    self.parity = true
+    activate_field
+    poll_mifare
+  end
 end
