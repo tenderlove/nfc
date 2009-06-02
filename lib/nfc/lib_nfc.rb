@@ -32,12 +32,12 @@ class NFC
 
     class ISO1443A < FFI::Struct
       layout(
-        :abtAtqa, [:char, 2],
-        :btSak, :char,
+        :abtAtqa, [:uchar, 2],
+        :btSak, :uchar,
         :uiUidLen, :int,
         :abtUid, [:uchar, 10],
         :uiAtsLen, :int,
-        :abtAts, [:char, 36]
+        :abtAts, [:uchar, 36]
       )
 
       def uid
