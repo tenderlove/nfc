@@ -44,6 +44,10 @@ class NFC
         self[:abtUid].to_a.slice(0, self[:uiUidLen])
       end
 
+      def ats
+        self[:abtAts].to_a.slice(0, self[:uiAtsLen])
+      end
+
       def inspect
         uid = sprintf((['%02x'] * self[:uiUidLen]).join('  '), *self.uid)
 
@@ -54,10 +58,8 @@ class NFC
             "   SAK (SEL_RES): #{sprintf("%02x", self[:btSak])}"
           ]
         if self[:uiAtsLen] > 0
-          ats =
-            sprintf((['%02x'] * self[:uiAtsLen]).join('  '), *(self[:abtAts]))
-          string_ary <<
-            "       ATS (ATR): #{ats}"
+          ats = sprintf((['%02x'] * self[:uiAtsLen]).join('  '), *self.ats)
+          string_ary << "       ATS (ATR): #{ats}"
         end
         string_ary.join "\n"
       end
