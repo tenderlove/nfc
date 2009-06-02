@@ -1,0 +1,7 @@
+History.txt
+Manifest.txt
+README.txt
+Rakefile
+bin/nfc
+lib/nfc.rb
+test/test_nfc.rb
