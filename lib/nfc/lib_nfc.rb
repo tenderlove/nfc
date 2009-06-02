@@ -24,10 +24,6 @@ class NFC
       def name
         pointer.read_string
       end
-
-      def self.release ptr
-        LibNFC.nfc_disconnect ptr
-      end
     end
 
     class ISO1443A < FFI::Struct
