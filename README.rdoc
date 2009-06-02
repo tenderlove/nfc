@@ -10,7 +10,7 @@ lets you read RFID tags.
 
 == FEATURES/PROBLEMS:
 
-* Only supports ISO1443A tags (MIFARE) tags right now.
+* Only supports ISO1443A (MIFARE) tags right now.
 
 == SYNOPSIS:
 
