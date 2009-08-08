@@ -16,20 +16,44 @@ lets you read RFID tags.
 
   require 'nfc'
 
-  # Read your tag and print the info
+  # Read your tag and print the info.
   p NFC.instance.find
+
+  # NFC#find will return immidiately, which means you should have a tag
+  # sitting on the reader when running it.  If you'd like it to block until
+  # it detects a tag, give find a block like so:
+
+  NFC.instance.find do |tag|
+    p tag
+  end
+
+  # You can even run in an infinite loop if you'd like to continually find
+  # tags:
+
+  loop do
+    NFC.instance.find do |tag|
+      p tag
+    end
+  end
 
 == REQUIREMENTS:
 
 * A USB RFID reader.  I'm using the touchatag[http://touchatag.com].
-* ffi
 * libnfc
 
 == INSTALL:
 
-* First install libnfc[http://libnfc.org/]
-* Make sure libnfc.dylib or libnfc.so is in your library path
-* gem install nfc
+First install libnfc[http://libnfc.org/]
+I installed libnfc like this:
+
+  $ ./configure --prefix=/usr/local
+  $ make && make install
+
+The install the gem:
+
+  $ sudo gem install nfc
+
+NOTE!!!!  The nfc gem requires libnfc version 1.2.0 or greater!
 
 == LICENSE:
 
