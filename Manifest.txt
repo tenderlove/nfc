@@ -4,6 +4,14 @@ Manifest.txt
 README.rdoc
 Rakefile
 bin/nfc
+ext/nfc/extconf.rb
+ext/nfc/nfc.c
+ext/nfc/nfc.h
+ext/nfc/nfc_device.c
+ext/nfc/nfc_device.h
+ext/nfc/nfc_iso14443a.c
+ext/nfc/nfc_iso14443a.h
 lib/nfc.rb
-lib/nfc/lib_nfc.rb
+lib/nfc/device.rb
+lib/nfc/iso14443a.rb
 test/test_nfc.rb
