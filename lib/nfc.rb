@@ -55,7 +55,6 @@ class NFC
     activate_field
     tag = poll_mifare
     deselect
-    disconnect
     @mutex.unlock
     yield tag if block_given?
     tag
