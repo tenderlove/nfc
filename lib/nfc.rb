@@ -1,6 +1,7 @@
 require 'singleton'
 require 'thread'
-require 'nfc/lib_nfc'
+#require 'nfc/lib_nfc'
+require 'nfc/nfc'
 
 class NFC
   VERSION = '1.0.0'
@@ -73,12 +74,10 @@ class NFC
 
   private
   def connect
-    device = NFC::LibNFC::Device.new(NFC::LibNFC.nfc_connect)
-    LibNFC.nfc_initiator_init(device.pointer)
-    device
+    NFC::Device.connect
   end
 
   def disconnect
-    LibNFC.nfc_disconnect device.pointer
+    device.disconnect
   end
 end

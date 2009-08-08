@@ -2,15 +2,18 @@
 
 require 'rubygems'
 require 'hoe'
-$: << "lib"
-require 'nfc'
+gem 'rake-compiler', '>= 0.4.1'
+require "rake/extensiontask"
 
-Hoe.new('nfc', NFC::VERSION) do |p|
-  p.developer('Aaron Patterson', 'aaronp@rubyforge.org')
-  p.readme_file   = 'README.rdoc'
-  p.history_file  = 'CHANGELOG.rdoc'
-  p.extra_rdoc_files  = FileList['*.rdoc']
-  p.extra_deps      = ['ffi']
+HOE = Hoe.spec('nfc') do
+  developer('Aaron Patterson', 'aaronp@rubyforge.org')
+  self.readme_file   = 'README.rdoc'
+  self.history_file  = 'CHANGELOG.rdoc'
+  self.extra_rdoc_files  = FileList['*.rdoc']
+end
+
+RET = Rake::ExtensionTask.new("nfc", HOE.spec) do |ext|
+  ext.lib_dir = File.join('lib', 'nfc')
 end
 
 # vim: syntax=Ruby
