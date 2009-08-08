@@ -2,6 +2,7 @@ require 'singleton'
 require 'thread'
 require 'nfc/nfc'
 require 'nfc/device'
+require 'nfc/iso14443a'
 
 class NFC
   VERSION = '1.0.0'
