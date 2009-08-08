@@ -7,9 +7,10 @@ class NFC
 
     attach_function :nfc_connect, [], :pointer
     attach_function :nfc_disconnect, [:pointer], :void
-    attach_function :nfc_reader_init, [:pointer], :int
+    attach_function :nfc_initiator_init, [:pointer], :int
+    attach_function :nfc_initiator_deselect_tag, [:pointer], :int
     attach_function :nfc_configure, [:pointer, :int, :int], :int
-    attach_function :nfc_reader_list_passive, [:pointer, :int, :pointer, :int, :pointer], :int
+    attach_function :nfc_initiator_select_tag, [:pointer, :int, :pointer, :int, :pointer], :int
 
     DCO_HANDLE_CRC            = 0x00
     DCO_HANDLE_PARITY         = 0x01
@@ -19,11 +20,10 @@ class NFC
     IM_ISO14443A_106    = 0x00
 
     class Device < FFI::Struct
-      layout(:name, [:char, 256])
-
-      def name
-        pointer.read_string
-      end
+      layout(
+        :pdc, :pointer,
+        :name, :pointer
+      )
     end
 
     class ISO1443A < FFI::Struct

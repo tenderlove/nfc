@@ -42,7 +42,7 @@ class NFC
 
   def poll_mifare
     thing = LibNFC::ISO1443A.new
-    LibNFC.nfc_reader_list_passive(
+    LibNFC.nfc_initiator_select_tag(
       device.pointer,
       LibNFC::IM_ISO14443A_106,
       nil,
@@ -50,6 +50,10 @@ class NFC
       thing
     )
     thing
+  end
+
+  def deselect
+    LibNFC.nfc_initiator_deselect_tag(device.pointer)
   end
 
   def find
@@ -60,6 +64,7 @@ class NFC
     self.parity = true
     activate_field
     tag = poll_mifare
+    deselect
     disconnect
     @mutex.unlock
     yield tag if block_given?
@@ -69,7 +74,7 @@ class NFC
   private
   def connect
     device = NFC::LibNFC::Device.new(NFC::LibNFC.nfc_connect)
-    LibNFC.nfc_reader_init(device.pointer)
+    LibNFC.nfc_initiator_init(device.pointer)
     device
   end
 
