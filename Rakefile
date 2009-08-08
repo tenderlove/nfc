@@ -10,6 +10,7 @@ HOE = Hoe.spec('nfc') do
   self.readme_file   = 'README.rdoc'
   self.history_file  = 'CHANGELOG.rdoc'
   self.extra_rdoc_files  = FileList['*.rdoc']
+  self.spec_extras = { :extensions => ["ext/nfc/extconf.rb"] }
 end
 
 RET = Rake::ExtensionTask.new("nfc", HOE.spec) do |ext|

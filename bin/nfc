@@ -6,4 +6,6 @@ nfc = NFC.instance
 
 puts "Connected to NFC reader: #{nfc.device.name}"
 puts
-p nfc.find
+nfc.find do |tag|
+  p tag
+end
