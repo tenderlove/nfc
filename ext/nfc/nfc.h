@@ -7,5 +7,6 @@
 extern VALUE cNfc;
 
 #include <nfc_device.h>
+#include <nfc_iso14443a.h>
 
 #endif

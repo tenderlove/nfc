@@ -1,7 +1,7 @@
 require 'singleton'
 require 'thread'
-#require 'nfc/lib_nfc'
 require 'nfc/nfc'
+require 'nfc/device'
 
 class NFC
   VERSION = '1.0.0'
@@ -14,19 +14,19 @@ class NFC
   end
 
   def deactivate_field
-    LibNFC.nfc_configure device.pointer, LibNFC::DCO_ACTIVATE_FIELD, 0
+    device.configure Device::DCO_ACTIVATE_FIELD, 0
   end
 
   def activate_field
-    LibNFC.nfc_configure device.pointer, LibNFC::DCO_ACTIVATE_FIELD, 1
+    device.configure Device::DCO_ACTIVATE_FIELD, 1
   end
 
   def crc= value
-    LibNFC.nfc_configure device.pointer, LibNFC::DCO_HANDLE_CRC, value ? 1 : 0
+    device.configure Device::DCO_HANDLE_CRC, value ? 1 : 0
   end
 
   def parity= v
-    LibNFC.nfc_configure device.pointer, LibNFC::DCO_HANDLE_PARITY, v ? 1 : 0
+    device.configure Device::DCO_HANDLE_PARITY, v ? 1 : 0
   end
 
   def device
@@ -34,27 +34,15 @@ class NFC
   end
 
   def infinite_list_passive= v
-    LibNFC.nfc_configure(
-      device.pointer,
-      LibNFC::DCO_INFINITE_LIST_PASSIVE,
-      v ? 1 : 0
-    )
+    device.configure Device::DCO_INFINITE_LIST_PASSIVE, v ? 1 : 0
   end
 
   def poll_mifare
-    thing = LibNFC::ISO1443A.new
-    LibNFC.nfc_initiator_select_tag(
-      device.pointer,
-      LibNFC::IM_ISO14443A_106,
-      nil,
-      0,
-      thing
-    )
-    thing
+    device.select Device::IM_ISO14443A_106
   end
 
   def deselect
-    LibNFC.nfc_initiator_deselect_tag(device.pointer)
+    device.deselect
   end
 
   def find
