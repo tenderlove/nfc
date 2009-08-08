@@ -2,6 +2,12 @@
 
 VALUE cNfcISO14443A;
 
+/*
+ * call-seq:
+ *  uiUidLen
+ *
+ * Get the uiUidLen
+ */
 static VALUE uiUidLen(VALUE self)
 {
   tag_info_iso14443a * tag;
@@ -10,6 +16,12 @@ static VALUE uiUidLen(VALUE self)
   return INT2NUM(tag->uiUidLen);
 }
 
+/*
+ * call-seq:
+ *  uiAtsLen
+ *
+ * Get the uiAtsLen
+ */
 static VALUE uiAtsLen(VALUE self)
 {
   tag_info_iso14443a * tag;
@@ -18,6 +30,12 @@ static VALUE uiAtsLen(VALUE self)
   return INT2NUM(tag->uiAtsLen);
 }
 
+/*
+ * call-seq:
+ *  abtUid
+ *
+ * Get the abtUid
+ */
 static VALUE abtUid(VALUE self)
 {
   tag_info_iso14443a * tag;
@@ -26,6 +44,12 @@ static VALUE abtUid(VALUE self)
   return rb_str_new(tag->abtUid, tag->uiUidLen);
 }
 
+/*
+ * call-seq:
+ *  abtAts
+ *
+ * Get the abtAts
+ */
 static VALUE abtAts(VALUE self)
 {
   tag_info_iso14443a * tag;
@@ -34,6 +58,12 @@ static VALUE abtAts(VALUE self)
   return rb_str_new(tag->abtAts, tag->uiAtsLen);
 }
 
+/*
+ * call-seq:
+ *  abtAtqa
+ *
+ * Get the abtAtqa
+ */
 static VALUE abtAtqa(VALUE self)
 {
   tag_info_iso14443a * tag;
@@ -42,6 +72,12 @@ static VALUE abtAtqa(VALUE self)
   return rb_str_new(tag->abtAtqa, 2);
 }
 
+/*
+ * call-seq:
+ *  btSak
+ *
+ * Get the btSak
+ */
 static VALUE btSak(VALUE self)
 {
   tag_info_iso14443a * tag;

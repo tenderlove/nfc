@@ -1,3 +1,9 @@
+=== HEAD
+
+* 1 major enhancement
+
+  * Switched from FFI to a C backend
+
 === 1.0.0 / 2009-06-01
 
 * 1 major enhancement

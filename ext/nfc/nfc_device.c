@@ -1,5 +1,11 @@
 #include <nfc_device.h>
 
+/*
+ * call-seq:
+ *  connect
+ *
+ * Connect to the NFC device
+ */
 static VALUE connect(VALUE klass)
 {
   dev_info * dev = nfc_connect();
@@ -9,6 +15,12 @@ static VALUE connect(VALUE klass)
   return Data_Wrap_Struct(klass, 0, 0, dev);
 }
 
+/*
+ * call-seq:
+ *  disconnect
+ *
+ * Disconnect from the NFC device
+ */
 static VALUE disconnect(VALUE self)
 {
   dev_info * dev;
@@ -18,6 +30,12 @@ static VALUE disconnect(VALUE self)
   return self;
 }
 
+/*
+ * call-seq:
+ *  configure(option, value)
+ *
+ * Configure the Device with +option+ and +value+
+ */
 static VALUE configure(VALUE self, VALUE option, VALUE flag)
 {
   dev_info * dev;
@@ -32,6 +50,12 @@ static VALUE configure(VALUE self, VALUE option, VALUE flag)
   return self;
 }
 
+/*
+ * call-seq:
+ *  select(tag)
+ *
+ * Select the +tag+ type from the device
+ */
 static VALUE dev_select(VALUE self, VALUE tag)
 {
   dev_info * dev;
@@ -44,6 +68,12 @@ static VALUE dev_select(VALUE self, VALUE tag)
   return Data_Wrap_Struct(cNfcISO14443A, 0, free, ti);
 }
 
+/*
+ * call-seq:
+ *  name
+ *
+ * Get the name of the tag reader
+ */
 static VALUE name(VALUE self)
 {
   dev_info * dev;
@@ -52,6 +82,12 @@ static VALUE name(VALUE self)
   return rb_str_new2(dev->acName);
 }
 
+/*
+ * call-seq:
+ *  deselect
+ *
+ * Deselect the current tag
+ */
 static VALUE dev_deselect(VALUE self)
 {
   dev_info * dev;

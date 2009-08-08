@@ -1,17 +1,25 @@
 class NFC
   class ISO14443A
+    ###
+    # Get the unique ID for this tag
     def uid
       abtUid.unpack 'C*'
     end
 
+    ###
+    # Get the ATS for this tag
     def ats
       abtAts.unpack 'C*'
     end
 
+    ###
+    # Get the atqa
     def atqa
       abtAtqa.unpack 'C*'
     end
 
+    ###
+    # Inspect this tag
     def inspect
       uid = sprintf((['%02x'] * uiUidLen).join('  '), *self.uid)
 
