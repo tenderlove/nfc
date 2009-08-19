@@ -5,6 +5,8 @@ require 'hoe'
 gem 'rake-compiler', '>= 0.4.1'
 require "rake/extensiontask"
 
+Hoe.plugin :debugging
+
 HOE = Hoe.spec('nfc') do
   developer('Aaron Patterson', 'aaronp@rubyforge.org')
   self.readme_file   = 'README.rdoc'

@@ -9,6 +9,9 @@
 static VALUE connect(VALUE klass)
 {
   dev_info * dev = nfc_connect();
+  if(!dev)
+    rb_raise(rb_eRuntimeError, "could not find NFC device");
+
   if(!nfc_initiator_init(dev))
     rb_raise(rb_eRuntimeError, "oh snap, could not init");
 
