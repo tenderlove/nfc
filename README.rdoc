@@ -43,11 +43,10 @@ lets you read RFID tags.
 
 == INSTALL:
 
-First install libnfc[http://libnfc.org/]
-I installed libnfc like this:
+First install libnfc[http://libnfc.org/].
+I installed libnfc via MacPorts[http://www.macports.org/] like this:
 
-  $ ./configure --prefix=/usr/local
-  $ make && make install
+  $ sudo port install libnfc
 
 The install the gem:
 
