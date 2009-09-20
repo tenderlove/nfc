@@ -9,7 +9,7 @@ require 'nfc/iso14443a'
 # library will read RFID tags from an RFID reader.  You should start by reading
 # NFC#find
 class NFC
-  VERSION = '2.0.0'
+  VERSION = '2.0.1'
 
   include Singleton
 

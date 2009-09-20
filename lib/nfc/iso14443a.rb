@@ -19,14 +19,18 @@ class NFC
     end
 
     ###
+    # Get the UID as a hex string
+    def to_s join_string = ''
+      sprintf((['%02x'] * uiUidLen).join(join_string), * uid).upcase
+    end
+
+    ###
     # Inspect this tag
     def inspect
-      uid = sprintf((['%02x'] * uiUidLen).join('  '), *self.uid)
-
       string_ary =
         [ "(NFC) ISO14443A Tag",
           " ATQA (SENS_RES): #{sprintf("%02x  %02x", *atqa)}",
-          "    UID (NFCID1): #{uid}",
+          "    UID (NFCID1): #{to_s '  '}",
           "   SAK (SEL_RES): #{sprintf("%02x", btSak)}"
         ]
       if uiAtsLen > 0

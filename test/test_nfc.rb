@@ -32,8 +32,4 @@ class TestNFC < Test::Unit::TestCase
     @nfc.infinite_list_passive = true
     @nfc.infinite_list_passive = false
   end
-
-  def test_poll_mifare
-    thing = @nfc.poll_mifare
-  end
 end

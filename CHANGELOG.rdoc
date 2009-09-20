@@ -1,3 +1,9 @@
+=== 2.0.1 / 2009-09-19
+
+* 1 Bugfix
+
+  * Raising an exception when a reader cannot be found.
+
 === 2.0.0 / 2009-08-07
 
 * 2 major enhancements
