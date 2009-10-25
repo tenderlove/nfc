@@ -8,4 +8,5 @@ void Init_nfc()
 
   init_device();
   init_iso14443a();
+  init_felica();
 }

@@ -3,13 +3,14 @@ require 'thread'
 require 'nfc/nfc'
 require 'nfc/device'
 require 'nfc/iso14443a'
+require 'nfc/felica'
 
 ###
 # NFC is a class for dealing with Near Field Communication systems.  This
 # library will read RFID tags from an RFID reader.  You should start by reading
 # NFC#find
 class NFC
-  VERSION = '2.0.1'
+  VERSION = '2.0.2'
 
   include Singleton
 

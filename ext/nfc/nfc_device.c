@@ -1,5 +1,7 @@
 #include <nfc_device.h>
 
+static byte_t abtFelica[5] = { 0x00, 0xff, 0xff, 0x00, 0x00 };
+
 /*
  * call-seq:
  *  connect
@@ -66,9 +68,15 @@ static VALUE dev_select(VALUE self, VALUE tag)
 
   tag_info * ti = calloc(1, sizeof(tag_info));
 
-  nfc_initiator_select_tag(dev, IM_ISO14443A_106, NULL, 0, ti);
+  if (nfc_initiator_select_tag(dev, IM_FELICA_212, abtFelica, 5, ti) ||
+      nfc_initiator_select_tag(dev, IM_FELICA_424, abtFelica, 5, ti)) {
+    return Data_Wrap_Struct(cNfcFelica, 0, free, ti); 
+  }
 
-  return Data_Wrap_Struct(cNfcISO14443A, 0, free, ti);
+  if (nfc_initiator_select_tag(dev, IM_ISO14443A_106, NULL, 0, ti) ) {
+    return Data_Wrap_Struct(cNfcISO14443A, 0, free, ti);
+  }
+
 }
 
 /*
