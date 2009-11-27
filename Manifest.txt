@@ -9,10 +9,10 @@ ext/nfc/nfc.c
 ext/nfc/nfc.h
 ext/nfc/nfc_device.c
 ext/nfc/nfc_device.h
+ext/nfc/nfc_felica.c
+ext/nfc/nfc_felica.h
 ext/nfc/nfc_iso14443a.c
 ext/nfc/nfc_iso14443a.h
-ext/nfc/nfc_felica.h
-ext/nfc/nfc_felica.c
 lib/nfc.rb
 lib/nfc/device.rb
 lib/nfc/felica.rb
