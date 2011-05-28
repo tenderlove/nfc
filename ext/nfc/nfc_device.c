@@ -65,21 +65,27 @@ static VALUE dev_select(VALUE self, VALUE tag)
 {
   nfc_device_t * dev;
   nfc_modulation_t * mod;
+  nfc_target_t * ti;
 
   Data_Get_Struct(self, nfc_device_t, dev);
   Data_Get_Struct(tag, nfc_modulation_t, mod);
 
-  nfc_target_t * ti = calloc(1, sizeof(nfc_target_t));
+  ti = (nfc_target_t *)calloc(1, sizeof(nfc_target_t));
 
   if (nfc_initiator_select_passive_target(dev, *mod, NULL, 0, ti) ) {
-    return Data_Wrap_Struct(cNfcISO14443A, 0, free, ti);
+    switch(mod->nmt) {
+      case NMT_ISO14443A:
+        return Data_Wrap_Struct(cNfcISO14443A, 0, free, ti);
+        break;
+      case NMT_FELICA:
+        return Data_Wrap_Struct(cNfcFelica, 0, free, ti);
+        break;
+      default:
+        rb_raise(rb_eRuntimeError, "untested type: %d", mod->nmt);
+    }
   }
 
-  /*
-  if (nfc_initiator_select_tag(dev, IM_FELICA_212, abtFelica, 5, ti) || nfc_initiator_select_tag(dev, IM_FELICA_424, abtFelica, 5, ti)) {
-    return Data_Wrap_Struct(cNfcFelica, 0, free, ti); 
-  }
-  */
+  return Qfalse;
 }
 
 /*
@@ -152,6 +158,7 @@ static VALUE mod_nbr(VALUE self)
 
 void init_device()
 {
+  VALUE cNfcModulation;
   VALUE cNfcDevice = rb_define_class_under(cNfc, "Device", rb_cObject);
 
   rb_define_singleton_method(cNfcDevice, "connect", connect, 0);
@@ -161,7 +168,7 @@ void init_device()
   rb_define_method(cNfcDevice, "deselect", dev_deselect, 0);
   rb_define_method(cNfcDevice, "name", name, 0);
 
-  VALUE cNfcModulation = rb_define_class_under(cNfcDevice, "Modulation", rb_cObject);
+  cNfcModulation = rb_define_class_under(cNfcDevice, "Modulation", rb_cObject);
 
   /* modulation types. */
   rb_define_const(cNfcModulation, "NMT_ISO14443A", INT2NUM(NMT_ISO14443A));
