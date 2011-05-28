@@ -5,6 +5,7 @@ class NFC
     DCO_ACTIVATE_FIELD        = 0x10
     DCO_INFINITE_LIST_PASSIVE = 0x20
 
-    IM_ISO14443A_106    = 0x00
+    IM_ISO14443A_106 = Modulation.new Modulation::ISO14443A,
+                                      Modulation::NBR_106
   end
 end

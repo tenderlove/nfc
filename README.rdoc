@@ -52,13 +52,13 @@ The install the gem:
 
   $ sudo gem install nfc
 
-NOTE!!!!  The nfc gem requires libnfc version 1.2.0 or greater!
+NOTE!!!!  The nfc gem requires libnfc version 1.5.0 or greater!
 
 == LICENSE:
 
 (The MIT License)
 
-Copyright (c) 2009 Aaron Patterson
+Copyright (c) 2009-2011 Aaron Patterson
 
 Permission is hereby granted, free of charge, to any person obtaining
 a copy of this software and associated documentation files (the

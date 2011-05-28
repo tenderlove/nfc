@@ -2,7 +2,7 @@
 #define NFC_H
 
 #include <ruby.h>
-#include <libnfc/libnfc.h>
+#include <nfc/nfc.h>
 
 extern VALUE cNfc;
 

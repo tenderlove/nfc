@@ -37,17 +37,13 @@ LIB_DIRS = [
   '/usr/lib',
 ]
 
-nfc_dirs = dir_config('nfc', '/opt/local/include', '/opt/local/lib')
-unless ["", ""] == nfc_dirs
-  HEADER_DIRS.unshift nfc_dirs.first
-  LIB_DIRS.unshift nfc_dirs[1]
-end
+nfc_dirs = dir_config('nfc', HEADER_DIRS, LIB_DIRS)
 
-unless find_header('libnfc/libnfc.h', *HEADER_DIRS)
+unless find_header('nfc/nfc.h')
   abort "libnfc is missing.  please install libnfc: http://libnfc.org/"
 end
 
-unless find_library('nfc', 'nfc_connect', *LIB_DIRS)
+unless find_library('nfc', 'nfc_connect')
   abort "libnfc is missing.  please install libnfc: http://libnfc.org/"
 end
 
