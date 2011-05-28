@@ -10,7 +10,7 @@ require 'nfc/felica'
 # library will read RFID tags from an RFID reader.  You should start by reading
 # NFC#find
 class NFC
-  VERSION = '2.0.2'
+  VERSION = '2.1.0'
 
   include Singleton
 
