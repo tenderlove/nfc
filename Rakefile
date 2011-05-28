@@ -6,14 +6,14 @@ gem 'rake-compiler', '>= 0.4.1'
 require "rake/extensiontask"
 
 Hoe.plugin :debugging
+Hoe.plugin :git
 
 HOE = Hoe.spec('nfc') do
-  developer('Aaron Patterson', 'aaronp@rubyforge.org')
+  developer('Aaron Patterson', 'aaron@tenderlovemaking.com')
   self.readme_file   = 'README.rdoc'
   self.history_file  = 'CHANGELOG.rdoc'
   self.extra_rdoc_files  = FileList['*.rdoc']
   self.spec_extras = { :extensions => ["ext/nfc/extconf.rb"] }
-  self.rubyforge_name = 'seattlerb'
 end
 
 RET = Rake::ExtensionTask.new("nfc", HOE.spec) do |ext|
