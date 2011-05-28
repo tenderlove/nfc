@@ -21,7 +21,7 @@ class NFC
     ###
     # Get the UID as a hex string
     def to_s join_string = ''
-      sprintf((['%02x'] * uiUidLen).join(join_string), * uid).upcase
+      sprintf((['%02x'] * szUidLen).join(join_string), * uid).upcase
     end
 
     ###
@@ -33,8 +33,8 @@ class NFC
           "    UID (NFCID1): #{to_s '  '}",
           "   SAK (SEL_RES): #{sprintf("%02x", btSak)}"
         ]
-      if uiAtsLen > 0
-        ats = sprintf((['%02x'] * uiAtsLen).join('  '), *self.ats)
+      if szAtsLen > 0
+        ats = sprintf((['%02x'] * szAtsLen).join('  '), *self.ats)
         string_ary << "       ATS (ATR): #{ats}"
       end
       string_ary.join "\n"

@@ -67,7 +67,7 @@ static VALUE dev_select(VALUE self, VALUE tag)
   nfc_modulation_t * mod;
 
   Data_Get_Struct(self, nfc_device_t, dev);
-  Data_Get_Struct(self, nfc_modulation_t, mod);
+  Data_Get_Struct(tag, nfc_modulation_t, mod);
 
   nfc_target_t * ti = calloc(1, sizeof(nfc_target_t));
 
@@ -132,6 +132,24 @@ static VALUE mod_alloc(VALUE klass)
   return Data_Wrap_Struct(klass, NULL, xfree, modulation);
 }
 
+static VALUE mod_nmt(VALUE self)
+{
+  nfc_modulation_t * mod;
+
+  Data_Get_Struct(self, nfc_modulation_t, mod);
+
+  return INT2NUM(mod->nmt);
+}
+
+static VALUE mod_nbr(VALUE self)
+{
+  nfc_modulation_t * mod;
+
+  Data_Get_Struct(self, nfc_modulation_t, mod);
+
+  return INT2NUM(mod->nbr);
+}
+
 void init_device()
 {
   VALUE cNfcDevice = rb_define_class_under(cNfc, "Device", rb_cObject);
@@ -146,8 +164,8 @@ void init_device()
   VALUE cNfcModulation = rb_define_class_under(cNfcDevice, "Modulation", rb_cObject);
 
   /* modulation types. */
-  rb_define_const(cNfcModulation, "ISO14443A", INT2NUM(NMT_ISO14443A));
-  rb_define_const(cNfcModulation, "FELICA", INT2NUM(NMT_FELICA));
+  rb_define_const(cNfcModulation, "NMT_ISO14443A", INT2NUM(NMT_ISO14443A));
+  rb_define_const(cNfcModulation, "NMT_FELICA", INT2NUM(NMT_FELICA));
 
   /* baud rates */
   rb_define_const(cNfcModulation, "NBR_UNDEFINED", INT2NUM(NBR_UNDEFINED));
@@ -157,4 +175,6 @@ void init_device()
   rb_define_alloc_func(cNfcModulation, mod_alloc);
 
   rb_define_method(cNfcModulation, "initialize", mod_initialize, 2);
+  rb_define_method(cNfcModulation, "nmt", mod_nmt, 0);
+  rb_define_method(cNfcModulation, "nbr", mod_nbr, 0);
 }
