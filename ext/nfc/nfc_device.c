@@ -113,7 +113,7 @@ static VALUE dev_deselect(VALUE self)
   nfc_device_t * dev;
   Data_Get_Struct(self, nfc_device_t, dev);
 
-  //nfc_initiator_deselect_tag(dev);
+  nfc_initiator_deselect_target(dev);
 
   return self;
 }
