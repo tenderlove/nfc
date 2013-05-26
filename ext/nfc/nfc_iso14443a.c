@@ -1,3 +1,4 @@
+#if 0
 #include <nfc.h>
 
 VALUE cNfcISO14443A;
@@ -98,3 +99,4 @@ void init_iso14443a()
   rb_define_private_method(cNfcISO14443A, "abtAts", abtAts, 0);
   rb_define_private_method(cNfcISO14443A, "abtAtqa", abtAtqa, 0);
 }
+#endif

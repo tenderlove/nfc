@@ -1,4 +1,3 @@
-require 'singleton'
 require 'thread'
 require 'nfc/nfc'
 require 'nfc/device'
@@ -9,10 +8,8 @@ require 'nfc/felica'
 # NFC is a class for dealing with Near Field Communication systems.  This
 # library will read RFID tags from an RFID reader.  You should start by reading
 # NFC#find
-class NFC
+module NFC
   VERSION = '2.1.0'
-
-  include Singleton
 
   ###
   # Create a new NFC class.  This is private, do this instead:

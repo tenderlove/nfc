@@ -4,7 +4,7 @@
 #include <ruby.h>
 #include <nfc/nfc.h>
 
-extern VALUE cNfc;
+extern VALUE mNfc;
 extern VALUE cNfcISO14443A;
 extern VALUE cNfcFelica;
 

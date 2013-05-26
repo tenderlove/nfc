@@ -1,7 +1,7 @@
-require "test/unit"
+require "minitest/autorun"
 require "nfc"
 
-class TestNFC < Test::Unit::TestCase
+class TestNFC < Minitest::Test
   def setup
     @nfc = NFC.instance
   end

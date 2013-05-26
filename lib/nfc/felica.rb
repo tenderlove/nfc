@@ -1,4 +1,4 @@
-class NFC
+module NFC
   class Felica
 
     def uid

@@ -1,4 +1,4 @@
-class NFC
+module NFC
   class ISO14443A
     ###
     # Get the unique ID for this tag

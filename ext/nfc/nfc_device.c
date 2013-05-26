@@ -1,3 +1,4 @@
+#if 0
 #include <nfc.h>
 
 static byte_t abtFelica[5] = { 0x00, 0xff, 0xff, 0x00, 0x00 };
@@ -185,3 +186,4 @@ void init_device()
   rb_define_method(cNfcModulation, "nmt", mod_nmt, 0);
   rb_define_method(cNfcModulation, "nbr", mod_nbr, 0);
 }
+#endif

@@ -1,3 +1,4 @@
+#if 0
 #include <nfc.h>
 
 VALUE cNfcFelica;
@@ -60,3 +61,4 @@ void init_felica()
   rb_define_private_method(cNfcFelica, "abtPad", abtPad, 0);
   rb_define_private_method(cNfcFelica, "abtSysCode", abtSysCode, 0);
 }
+#endif

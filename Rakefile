@@ -7,6 +7,7 @@ require "rake/extensiontask"
 
 Hoe.plugin :debugging
 Hoe.plugin :git
+Hoe.plugin :minitest
 
 HOE = Hoe.spec('nfc') do
   developer('Aaron Patterson', 'aaron@tenderlovemaking.com')
