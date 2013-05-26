@@ -1,4 +1,4 @@
-#include <nfc_felica.h>
+#include <nfc.h>
 
 VALUE cNfcFelica;
 

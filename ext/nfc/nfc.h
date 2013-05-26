@@ -5,11 +5,12 @@
 #include <nfc/nfc.h>
 
 extern VALUE cNfc;
+extern VALUE cNfcISO14443A;
+extern VALUE cNfcFelica;
 
 void init_context();
-
-#include <nfc_device.h>
-#include <nfc_iso14443a.h>
-#include <nfc_felica.h>
+void init_device();
+void init_iso14443a();
+void init_felica();
 
 #endif

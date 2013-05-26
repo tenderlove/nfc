@@ -1,4 +1,4 @@
-#include <nfc_iso14443a.h>
+#include <nfc.h>
 
 VALUE cNfcISO14443A;
 

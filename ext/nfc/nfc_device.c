@@ -1,4 +1,4 @@
-#include <nfc_device.h>
+#include <nfc.h>
 
 static byte_t abtFelica[5] = { 0x00, 0xff, 0xff, 0x00, 0x00 };
 
