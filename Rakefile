@@ -21,4 +21,9 @@ RET = Rake::ExtensionTask.new("nfc", HOE.spec) do |ext|
   ext.lib_dir = File.join('lib', 'nfc')
 end
 
+task :kill do
+  pid = `sudo launchctl list | grep pcscd`[/^\d+/]
+  `sudo kill #{pid}` if pid
+end
+
 # vim: syntax=Ruby
