@@ -6,6 +6,31 @@ static VALUE allocate(VALUE klass) {
   return Data_Wrap_Struct(klass, NULL, nfc_exit, context);
 }
 
+static VALUE open_dev(VALUE self, VALUE name)
+{
+  nfc_context * ctx;
+  nfc_device * dev;
+  VALUE device;
+
+  Data_Get_Struct(self, nfc_context, ctx);
+
+  if (NIL_P(name)) {
+    dev = nfc_open(ctx, NULL);
+  } else {
+    dev = nfc_open(ctx, StringValuePtr(name));
+  }
+
+  if (NULL == dev)
+    rb_raise(rb_eRuntimeError, "Unable to open the device");
+
+  if(nfc_initiator_init(dev) < 0)
+    rb_raise(rb_eRuntimeError, "Could not initialize device");
+
+  device = Data_Wrap_Struct(cNfcDevice, 0, nfc_close, dev);
+  rb_iv_set(device, "@context", self);
+  return device;
+}
+
 static VALUE devices(VALUE self, VALUE len)
 {
   nfc_context *ctx;
@@ -32,4 +57,5 @@ void init_context()
   rb_define_alloc_func(cContext, allocate);
 
   rb_define_method(cContext, "devices", devices, 1);
+  rb_define_method(cContext, "open", open_dev, 1);
 }
