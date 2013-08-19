@@ -87,7 +87,6 @@ static VALUE name(VALUE self)
   return rb_str_new2(nfc_device_get_name(dev));
 }
 
-#if 0
 /*
  * call-seq:
  *  deselect
@@ -96,14 +95,13 @@ static VALUE name(VALUE self)
  */
 static VALUE dev_deselect(VALUE self)
 {
-  nfc_device_t * dev;
-  Data_Get_Struct(self, nfc_device_t, dev);
+  nfc_device * dev;
+  Data_Get_Struct(self, nfc_device, dev);
 
   nfc_initiator_deselect_target(dev);
 
   return self;
 }
-#endif
 
 static VALUE mod_initialize(VALUE self, VALUE type, VALUE baud)
 {
@@ -165,14 +163,7 @@ void init_device()
   rb_define_method(cNfcDevice, "select_passive_target", select_passive_target, 1);
   rb_define_method(cNfcDevice, "poll_target", poll_target, 1);
   rb_define_method(cNfcDevice, "name", name, 0);
-
-#if 0
-  rb_define_singleton_method(cNfcDevice, "connect", connect, 0);
-  rb_define_method(cNfcDevice, "disconnect", disconnect, 0);
-  rb_define_method(cNfcDevice, "configure", configure, 2);
-  rb_define_method(cNfcDevice, "select", dev_select, 1);
   rb_define_method(cNfcDevice, "deselect", dev_deselect, 0);
-#endif
 
   cNfcModulation = rb_define_class_under(cNfcDevice, "Modulation", rb_cObject);
 
