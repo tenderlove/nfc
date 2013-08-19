@@ -1,4 +1,3 @@
-#if 0
 #include <nfc.h>
 
 VALUE cNfcISO14443A;
@@ -11,10 +10,10 @@ VALUE cNfcISO14443A;
  */
 static VALUE szUidLen(VALUE self)
 {
-  nfc_iso14443a_info_t * tag;
-  Data_Get_Struct(self, nfc_iso14443a_info_t, tag);
+  nfc_target * tag;
+  Data_Get_Struct(self, nfc_target, tag);
 
-  return INT2NUM(tag->szUidLen);
+  return INT2NUM(tag->nti.nai.szUidLen);
 }
 
 /*
@@ -25,10 +24,10 @@ static VALUE szUidLen(VALUE self)
  */
 static VALUE szAtsLen(VALUE self)
 {
-  nfc_iso14443a_info_t * tag;
-  Data_Get_Struct(self, nfc_iso14443a_info_t, tag);
+  nfc_target * tag;
+  Data_Get_Struct(self, nfc_target, tag);
 
-  return INT2NUM(tag->szAtsLen);
+  return INT2NUM(tag->nti.nai.szAtsLen);
 }
 
 /*
@@ -39,10 +38,10 @@ static VALUE szAtsLen(VALUE self)
  */
 static VALUE abtUid(VALUE self)
 {
-  nfc_iso14443a_info_t * tag;
-  Data_Get_Struct(self, nfc_iso14443a_info_t, tag);
+  nfc_target * tag;
+  Data_Get_Struct(self, nfc_target, tag);
 
-  return rb_str_new(tag->abtUid, tag->szUidLen);
+  return rb_str_new((const char *)tag->nti.nai.abtUid, tag->nti.nai.szUidLen);
 }
 
 /*
@@ -53,10 +52,10 @@ static VALUE abtUid(VALUE self)
  */
 static VALUE abtAts(VALUE self)
 {
-  nfc_iso14443a_info_t * tag;
-  Data_Get_Struct(self, nfc_iso14443a_info_t, tag);
+  nfc_target * tag;
+  Data_Get_Struct(self, nfc_target, tag);
 
-  return rb_str_new(tag->abtAts, tag->szAtsLen);
+  return rb_str_new((const char *)tag->nti.nai.abtAts, tag->nti.nai.szAtsLen);
 }
 
 /*
@@ -67,10 +66,10 @@ static VALUE abtAts(VALUE self)
  */
 static VALUE abtAtqa(VALUE self)
 {
-  nfc_iso14443a_info_t * tag;
-  Data_Get_Struct(self, nfc_iso14443a_info_t, tag);
+  nfc_target * tag;
+  Data_Get_Struct(self, nfc_target, tag);
 
-  return rb_str_new(tag->abtAtqa, 2);
+  return rb_str_new((const char *)tag->nti.nai.abtAtqa, 2);
 }
 
 /*
@@ -81,15 +80,15 @@ static VALUE abtAtqa(VALUE self)
  */
 static VALUE btSak(VALUE self)
 {
-  nfc_iso14443a_info_t * tag;
-  Data_Get_Struct(self, nfc_iso14443a_info_t, tag);
+  nfc_target * tag;
+  Data_Get_Struct(self, nfc_target, tag);
 
-  return INT2NUM(tag->btSak);
+  return INT2NUM(tag->nti.nai.btSak);
 }
 
 void init_iso14443a()
 {
-  cNfcISO14443A = rb_define_class_under(cNfc, "ISO14443A", rb_cObject);
+  cNfcISO14443A = rb_define_class_under(mNfc, "ISO14443A", rb_cObject);
 
   rb_define_method(cNfcISO14443A, "szUidLen", szUidLen, 0);
   rb_define_method(cNfcISO14443A, "szAtsLen", szAtsLen, 0);
@@ -99,4 +98,3 @@ void init_iso14443a()
   rb_define_private_method(cNfcISO14443A, "abtAts", abtAts, 0);
   rb_define_private_method(cNfcISO14443A, "abtAtqa", abtAtqa, 0);
 }
-#endif
