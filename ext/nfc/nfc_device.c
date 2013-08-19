@@ -2,61 +2,6 @@
 
 VALUE cNfcDevice;
 
-#if 0
-/*
- * call-seq:
- *  connect
- *
- * Connect to the NFC device
- */
-static VALUE connect(VALUE klass)
-{
-  nfc_device_t * dev = nfc_connect(NULL);
-  if(!dev)
-    rb_raise(rb_eRuntimeError, "could not find NFC device");
-
-  if(!nfc_initiator_init(dev))
-    rb_raise(rb_eRuntimeError, "oh snap, could not init");
-
-  return Data_Wrap_Struct(klass, 0, 0, dev);
-}
-
-/*
- * call-seq:
- *  disconnect
- *
- * Disconnect from the NFC device
- */
-static VALUE disconnect(VALUE self)
-{
-  nfc_device_t * dev;
-  Data_Get_Struct(self, nfc_device_t, dev);
-  nfc_disconnect(dev);
-
-  return self;
-}
-
-/*
- * call-seq:
- *  configure(option, value)
- *
- * Configure the Device with +option+ and +value+
- */
-static VALUE configure(VALUE self, VALUE option, VALUE flag)
-{
-  nfc_device_t * dev;
-  Data_Get_Struct(self, nfc_device_t, dev);
-
-  nfc_configure(
-    dev,
-    (const nfc_device_option_t)NUM2INT(option),
-    (const bool)NUM2INT(flag)
-  );
-
-  return self;
-}
-#endif
-
 /*
  * call-seq:
  *  select_passive_target(tag)
@@ -91,7 +36,43 @@ static VALUE select_passive_target(VALUE self, VALUE tag)
   return Qfalse;
 }
 
-#if 0
+/*
+ * call-seq:
+ *  poll_target(tag, ms)
+ *
+ * Poll the +tag+ type from the device
+ */
+static VALUE poll_target(VALUE self, VALUE tag, VALUE ms)
+{
+  nfc_device * dev;
+  nfc_modulation * mod;
+  nfc_target * ti;
+  int code;
+
+  Data_Get_Struct(self, nfc_device, dev);
+  Data_Get_Struct(tag, nfc_modulation, mod);
+
+  ti = (nfc_target *)xmalloc(sizeof(nfc_target));
+
+  code = nfc_initiator_poll_target(dev, mod, 1, 0, 1, ti);
+
+  if (code > 0) {
+    switch(mod->nmt) {
+      case NMT_ISO14443A:
+        return Data_Wrap_Struct(cNfcISO14443A, 0, xfree, ti);
+        break;
+      case NMT_FELICA:
+        /* return Data_Wrap_Struct(cNfcFelica, 0, free, ti); */
+        return Qnil;
+        break;
+      default:
+        rb_raise(rb_eRuntimeError, "untested type: %d", mod->nmt);
+    }
+  }
+
+  return INT2NUM(code);
+}
+
 /*
  * call-seq:
  *  name
@@ -100,12 +81,13 @@ static VALUE select_passive_target(VALUE self, VALUE tag)
  */
 static VALUE name(VALUE self)
 {
-  nfc_device_t * dev;
-  Data_Get_Struct(self, nfc_device_t, dev);
+  nfc_device * dev;
+  Data_Get_Struct(self, nfc_device, dev);
 
-  return rb_str_new2(dev->acName);
+  return rb_str_new2(nfc_device_get_name(dev));
 }
 
+#if 0
 /*
  * call-seq:
  *  deselect
@@ -181,6 +163,8 @@ void init_device()
   cNfcDevice = rb_define_class_under(mNfc, "Device", rb_cObject);
   rb_define_method(cNfcDevice, "initiator_init", initiator_init, 0);
   rb_define_method(cNfcDevice, "select_passive_target", select_passive_target, 1);
+  rb_define_method(cNfcDevice, "poll_target", poll_target, 1);
+  rb_define_method(cNfcDevice, "name", name, 0);
 
 #if 0
   rb_define_singleton_method(cNfcDevice, "connect", connect, 0);
@@ -188,7 +172,6 @@ void init_device()
   rb_define_method(cNfcDevice, "configure", configure, 2);
   rb_define_method(cNfcDevice, "select", dev_select, 1);
   rb_define_method(cNfcDevice, "deselect", dev_deselect, 0);
-  rb_define_method(cNfcDevice, "name", name, 0);
 #endif
 
   cNfcModulation = rb_define_class_under(cNfcDevice, "Modulation", rb_cObject);

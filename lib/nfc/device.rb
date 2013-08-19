@@ -7,5 +7,10 @@ module NFC
 
     IM_ISO14443A_106 = Modulation.new Modulation::NMT_ISO14443A,
                                       Modulation::NBR_106
+
+    # Find a tag, blocks until there is a tag available
+    def select
+      select_passive_target NFC::Device::IM_ISO14443A_106
+    end
   end
 end

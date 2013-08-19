@@ -3,12 +3,7 @@ require "nfc"
 
 class TestNFC < Minitest::Test
   def setup
-    skip
     @nfc = NFC.instance
-  end
-
-  def test_connect
-    assert_not_nil @nfc.device
   end
 
   def test_deactivate_field

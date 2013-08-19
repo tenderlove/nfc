@@ -8,8 +8,8 @@ module NFC
       devs = ctx.devices(1)
       skip "no devs attached" unless devs.length > 0
       dev = ctx.open nil
-      p dev.initiator_init
-      p dev.select_passive_target Device::IM_ISO14443A_106
+      dev.initiator_init
+      dev.select_passive_target Device::IM_ISO14443A_106
     end
   end
 end
