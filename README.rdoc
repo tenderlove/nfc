@@ -16,24 +16,20 @@ lets you read RFID tags.
 
   require 'nfc'
 
-  # Read your tag and print the info.
-  p NFC.instance.find
+  # Create a new context
+  ctx = NFC::Context.new
 
-  # NFC#find will return immidiately, which means you should have a tag
-  # sitting on the reader when running it.  If you'd like it to block until
-  # it detects a tag, give find a block like so:
+  # Open the first available USB device
+  dev = ctx.open nil
 
-  NFC.instance.find do |tag|
-    p tag
-  end
+  # Block until a tag is available, then print tag info
+  p dev.select
 
   # You can even run in an infinite loop if you'd like to continually find
   # tags:
 
   loop do
-    NFC.instance.find do |tag|
-      p tag
-    end
+    p dev.select
   end
 
 == REQUIREMENTS:
@@ -44,21 +40,21 @@ lets you read RFID tags.
 == INSTALL:
 
 First install libnfc[http://libnfc.org/].
-I installed libnfc via MacPorts[http://www.macports.org/] like this:
+I installed libnfc via homebrew:
 
-  $ sudo port install libnfc
+  $ brew install libnfc
 
 The install the gem:
 
   $ sudo gem install nfc
 
-NOTE!!!!  The nfc gem requires libnfc version 1.5.0 or greater!
+NOTE!!!!  The nfc gem requires libnfc version 1.7.0 or greater!
 
 == LICENSE:
 
 (The MIT License)
 
-Copyright (c) 2009-2011 Aaron Patterson
+Copyright (c) 2009-2013 Aaron Patterson
 
 Permission is hereby granted, free of charge, to any person obtaining
 a copy of this software and associated documentation files (the
