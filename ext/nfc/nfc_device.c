@@ -62,8 +62,7 @@ static VALUE poll_target(VALUE self, VALUE tag, VALUE ms)
         return Data_Wrap_Struct(cNfcISO14443A, 0, xfree, ti);
         break;
       case NMT_FELICA:
-        /* return Data_Wrap_Struct(cNfcFelica, 0, free, ti); */
-        return Qnil;
+        return Data_Wrap_Struct(cNfcFelica, 0, xfree, ti);
         break;
       default:
         rb_raise(rb_eRuntimeError, "untested type: %d", mod->nmt);

@@ -1,4 +1,3 @@
-#if 0
 #include <nfc.h>
 
 VALUE cNfcFelica;
@@ -13,47 +12,47 @@ VALUE cNfcFelica;
 
 static VALUE szLen(VALUE self)
 {
-  nfc_felica_info_t * tag;
-  Data_Get_Struct(self, nfc_felica_info_t, tag);
+  nfc_felica_info * tag;
+  Data_Get_Struct(self, nfc_felica_info, tag);
 
   return INT2NUM(tag->szLen);
 }
 
 static VALUE btResCode(VALUE self)
 {
-  nfc_felica_info_t * tag;
-  Data_Get_Struct(self, nfc_felica_info_t, tag);
+  nfc_felica_info * tag;
+  Data_Get_Struct(self, nfc_felica_info, tag);
 
   return INT2NUM(tag->btResCode);
 }
 
 static VALUE abtId(VALUE self)
 {
-  nfc_felica_info_t * tag;
-  Data_Get_Struct(self, nfc_felica_info_t, tag);
+  nfc_felica_info * tag;
+  Data_Get_Struct(self, nfc_felica_info, tag);
 
   return rb_str_new(tag->abtId, 8 );
 }
 
 static VALUE abtPad(VALUE self)
 {
-  nfc_felica_info_t * tag;
-  Data_Get_Struct(self, nfc_felica_info_t, tag);
+  nfc_felica_info * tag;
+  Data_Get_Struct(self, nfc_felica_info, tag);
 
   return rb_str_new(tag->abtPad, 8 );
 }
 
 static VALUE abtSysCode(VALUE self)
 {
-  nfc_felica_info_t * tag;
-  Data_Get_Struct(self, nfc_felica_info_t, tag);
+  nfc_felica_info * tag;
+  Data_Get_Struct(self, nfc_felica_info, tag);
 
   return rb_str_new(tag->abtSysCode, 2 );
 }
 
 void init_felica()
 {
-  cNfcFelica = rb_define_class_under(cNfc, "Felica", rb_cObject);
+  cNfcFelica = rb_define_class_under(mNfc, "Felica", rb_cObject);
 
   rb_define_method(cNfcFelica, "szLen", szLen, 0);
   rb_define_method(cNfcFelica, "btResCode", btResCode, 0);
@@ -61,4 +60,3 @@ void init_felica()
   rb_define_private_method(cNfcFelica, "abtPad", abtPad, 0);
   rb_define_private_method(cNfcFelica, "abtSysCode", abtSysCode, 0);
 }
-#endif
