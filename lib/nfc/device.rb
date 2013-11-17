@@ -12,7 +12,7 @@ module NFC
     def select
       select_passive_target NFC::Device::IM_ISO14443A_106
     end
-    def poll poll_nr = 1, ms = 150
+    def poll poll_nr = 1, ms = 1
     	poll_target NFC::Device::IM_ISO14443A_106, poll_nr,ms
     end
   end
