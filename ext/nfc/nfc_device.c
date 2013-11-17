@@ -42,19 +42,22 @@ static VALUE select_passive_target(VALUE self, VALUE tag)
  *
  * Poll the +tag+ type from the device
  */
-static VALUE poll_target(VALUE self, VALUE tag, VALUE ms)
+static VALUE poll_target(VALUE self, VALUE tag, VALUE poll_nr, VALUE ms)
 {
   nfc_device * dev;
   nfc_modulation * mod;
   nfc_target * ti;
   int code;
-
+	int ms_c, poll_nr_c;
   Data_Get_Struct(self, nfc_device, dev);
   Data_Get_Struct(tag, nfc_modulation, mod);
 
+	ms_c = FIX2INT(ms);
+	poll_nr_c = FIX2INT(poll_nr);
+	
   ti = (nfc_target *)xmalloc(sizeof(nfc_target));
 
-  code = nfc_initiator_poll_target(dev, mod, 1, 0, 1, ti);
+  code = nfc_initiator_poll_target(dev, mod, 1, poll_nr_c, ms_c, ti);
 
   if (code > 0) {
     switch(mod->nmt) {
@@ -160,7 +163,7 @@ void init_device()
   cNfcDevice = rb_define_class_under(mNfc, "Device", rb_cObject);
   rb_define_method(cNfcDevice, "initiator_init", initiator_init, 0);
   rb_define_method(cNfcDevice, "select_passive_target", select_passive_target, 1);
-  rb_define_method(cNfcDevice, "poll_target", poll_target, 1);
+  rb_define_method(cNfcDevice, "poll_target", poll_target, 3);
   rb_define_method(cNfcDevice, "name", name, 0);
   rb_define_method(cNfcDevice, "deselect", dev_deselect, 0);
 
