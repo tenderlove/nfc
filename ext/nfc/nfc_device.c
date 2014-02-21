@@ -30,7 +30,9 @@ static VALUE select_passive_target(VALUE self, VALUE tag)
         break;
       default:
         rb_raise(rb_eRuntimeError, "untested type: %d", mod->nmt);
-    }
+    } 
+  }else {
+	xfree(ti);
   }
 
   return Qfalse;
@@ -70,6 +72,8 @@ static VALUE poll_target(VALUE self, VALUE tag, VALUE poll_nr, VALUE ms)
       default:
         rb_raise(rb_eRuntimeError, "untested type: %d", mod->nmt);
     }
+  }else {
+	xfree(ti);
   }
 
   return INT2NUM(code);
