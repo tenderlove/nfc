@@ -6,14 +6,15 @@ module NFC
     DCO_INFINITE_LIST_PASSIVE = 0x20
 
     IM_ISO14443A_106 = Modulation.new Modulation::NMT_ISO14443A,
-                                      Modulation::NBR_106
+      Modulation::NBR_106
 
     # Find a tag, blocks until there is a tag available
     def select
       select_passive_target NFC::Device::IM_ISO14443A_106
     end
+
     def poll poll_nr = 1, ms = 1
-    	poll_target NFC::Device::IM_ISO14443A_106, poll_nr,ms
+      poll_target NFC::Device::IM_ISO14443A_106, poll_nr,ms
     end
   end
 end
