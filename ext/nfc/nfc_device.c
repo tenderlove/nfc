@@ -1,6 +1,27 @@
 #include <nfc.h>
+#include <ruby/thread.h>
 
 VALUE cNfcDevice;
+
+struct nogvl_ctx {
+    nfc_device *dev;
+    nfc_modulation *mod;
+    nfc_target *ti;
+};
+
+void * nogvl_select_passive_target(void * ctx)
+{
+    nfc_device * dev;
+    nfc_modulation * mod;
+    nfc_target * ti;
+
+    struct nogvl_ctx * myctx = (struct nogvl_ctx *)ctx;
+    dev = myctx->dev;
+    mod = myctx->mod;
+    ti = myctx->ti;
+
+    return nfc_initiator_select_passive_target(dev, *mod, NULL, 0, ti);
+}
 
 /*
  * call-seq:
@@ -13,13 +34,18 @@ static VALUE select_passive_target(VALUE self, VALUE tag)
     nfc_device * dev;
     nfc_modulation * mod;
     nfc_target * ti;
+    struct nogvl_ctx ctx;
 
     Data_Get_Struct(self, nfc_device, dev);
     Data_Get_Struct(tag, nfc_modulation, mod);
 
     ti = (nfc_target *)xmalloc(sizeof(nfc_target));
 
-    if (nfc_initiator_select_passive_target(dev, *mod, NULL, 0, ti) ) {
+    ctx.dev = dev;
+    ctx.mod = mod;
+    ctx.ti = ti;
+
+    if (rb_thread_call_without_gvl(nogvl_select_passive_target, &ctx, RUBY_UBF_IO, 0) ) {
 	switch(mod->nmt) {
 	    case NMT_ISO14443A:
 		return Data_Wrap_Struct(cNfcISO14443A, 0, xfree, ti);
