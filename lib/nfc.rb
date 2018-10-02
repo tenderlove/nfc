@@ -8,5 +8,5 @@ require 'nfc/felica'
 # NFC is a class for dealing with Near Field Communication systems.  This
 # library will read RFID tags from an RFID reader.
 module NFC
-  VERSION = '3.1.1'
+  VERSION = '3.1.2'
 end
